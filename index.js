@@ -1,5 +1,6 @@
 const { Client, Events, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
+const commands = require('./commands');
 
 const client = new Client({
     intents: [
@@ -14,11 +15,18 @@ client.once(Events.ClientReady, c => {
 });
 
 client.on('messageCreate', async message => {
-    console.log(message);
     var inputLine = message.content.split(' ');
     if (inputLine[0] == "rh!") {
-        
-        message.reply("yo");
+        if (inputLine[1] == 'add') {
+            aR = await commands.add();
+            message.reply("Current number of rehosts: " + aR);
+        } else if (inputLine[1] == 'rm') {
+            rmR = await commands.rm();
+            message.reply("Current number of rehosts: " + rmR);
+        } else if (inputLine[1] == 'clear') {
+            cR = await commands.clear();
+            message.reply("Number of rehosts has been reset to " + cR);
+        }
     }
 });
 
